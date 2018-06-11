@@ -2,5 +2,6 @@
 <resources>
     <string-array name="main_menu">
         <item>X5WebView - learn how to use cacheManager</item>
+        <item>change layoutParams dynamic</item>
     </string-array>
 </resources>

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import cn.tianyu.dailypractice.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_main_menu.view.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
@@ -51,6 +52,9 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
                         0 -> {
                             itemView.context.toast("position 0 been clicked")
 //                            itemView.context.startActivity<>()
+                        }
+                        1 -> {
+                            itemView.context.startActivity<LayoutParamTestActivity>()
                         }
                         else ->{
 
