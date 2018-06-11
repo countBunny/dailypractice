@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".ui.activity.LayoutParamTestActivity">
         </activity>
+        <activity android:name=".ui.activity.SpanPromptActivity">
+        </activity>
     </application>
 
 </manifest>

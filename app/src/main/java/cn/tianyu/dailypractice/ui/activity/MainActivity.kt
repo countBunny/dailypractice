@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import cn.tianyu.dailypractice.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_main_menu.view.*
@@ -56,8 +57,11 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
                         1 -> {
                             itemView.context.startActivity<LayoutParamTestActivity>()
                         }
+                        2->{
+                            itemView.context.startActivity<SpanPromptActivity>()
+                        }
                         else ->{
-
+                            Toast.makeText(itemView.context, "undefined ops!", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
