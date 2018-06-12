@@ -1,10 +1,15 @@
 package cn.tianyu.dailypractice.ui.activity
 
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
@@ -20,7 +25,7 @@ class SpanPromptActivity : AppCompatActivity() {
         val TAG: String = "SpanPromptActivity"
     }
 
-    val bulletSpan = BulletSpan(Color.BLUE)
+    val bulletSpan = BulletPointSpan(40, Color.BLUE, 20)
     val mSpanFactory: Spannable.Factory = object : Spannable.Factory() {
         override fun newSpannable(source: CharSequence?): Spannable {
             if (source == null) {
@@ -54,19 +59,33 @@ class SpanPromptActivity : AppCompatActivity() {
                         LogUtil.d(TAG, "current i is $i")
                         eraseSpanInMid(this)
                     }
-                    2->{
-                        LogUtil.d(TAG, "current i is $i")
-                        (text as Spannable).setSpan(bulletSpan, 0, spannableString.length,
-                                SpannableString.SPAN_INCLUSIVE_INCLUSIVE)
-
-                        spanColorChange(this, Color.BLUE)
+                    else -> {
+                        i = 0
                     }
-                    3 -> {
+                }
+            }
+            setBackgroundResource(R.drawable.shape_text_border)
+            val dp10 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, ctx.resources.displayMetrics).toInt()
+            setPadding(dp10, dp10, dp10, dp10)
+        }
+        tvSpan2.apply {
+            val spannableString = SpannableString("only change spannable property, \ninvoke text invalidate to update it, that's more effective!")
+            spannableString.setSpan(bulletSpan, 33, spannableString.length,
+                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text = spannableString
+            setOnClickListener {
+                when (i++) {
+                    0 -> {
                         LogUtil.d(TAG, "current i is $i")
                         spanColorChange(this)
                     }
+                    1 -> {
+                        LogUtil.d(TAG, "current i is $i")
+                        spanColorChange(this, Color.BLUE)
+                    }
                     else -> {
                         i = 0
+                        spanColorChange(this, Color.BLACK)
                     }
                 }
             }
@@ -77,9 +96,7 @@ class SpanPromptActivity : AppCompatActivity() {
     }
 
     private fun spanColorChange(textView: TextView?, color: Int = Color.RED) {
-        val colorField = BulletSpan::class.java.getDeclaredField("mColor")
-        colorField.isAccessible = true
-        colorField.set(bulletSpan, color)
+        bulletSpan.color = color
         textView?.invalidate()
         LogUtil.d(TAG, "color changed to $color")
     }
@@ -101,5 +118,46 @@ class SpanPromptActivity : AppCompatActivity() {
         val spannable = textView.text as Spannable
         spannable.setSpan(ForegroundColorSpan(Color.parseColor("#919191")),
                 0, spannable.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
+    class BulletPointSpan(gapWidth: Int, var color: Int, val bulletRadius: Int) : BulletSpan(gapWidth, color) {
+        override fun getLeadingMargin(first: Boolean): Int {
+            val gapField = BulletSpan::class.java.getDeclaredField("mGapWidth")
+            gapField.isAccessible = true
+            val gapWidth = gapField.getInt(this)
+            LogUtil.d(TAG, "current gapWidth is $gapWidth")
+            return gapWidth + bulletRadius * 2
+        }
+
+        override fun drawLeadingMargin(c: Canvas?, p: Paint?, x: Int, dir: Int, top: Int, baseline: Int, bottom: Int, text: CharSequence?, start: Int, end: Int, first: Boolean, l: Layout?) {
+            if (p == null || c == null || text == null) {
+                return
+            }
+            if ((text as Spanned).getSpanStart(this) == start) {
+                val style = p.style
+                val oldcolor = p.color
+                p.color = color
+                p.style = Paint.Style.FILL
+
+                if (c.isHardwareAccelerated()) {
+                    val bulletPath = BulletSpan::class.java.getDeclaredField("sBulletPath")
+                    bulletPath.isAccessible = true
+                    if (bulletPath.get(this) == null) {
+                        val path = Path()
+                        bulletPath.set(this, path)
+                        path.addCircle(0.0f, 0.0f, bulletRadius.toFloat(), Path.Direction.CW)
+                    }
+
+                    c.save()
+                    c.translate((x + dir * bulletRadius).toFloat(), (top + bottom) / 2.0f)
+                    c.drawPath(bulletPath.get(this) as Path, p)
+                    c.restore()
+                } else {
+                    c.drawCircle((x + dir * bulletRadius).toFloat(), (top + bottom) / 2.0f, bulletRadius.toFloat(), p)
+                }
+                p.color = oldcolor
+                p.style = style
+            }
+        }
     }
 }
