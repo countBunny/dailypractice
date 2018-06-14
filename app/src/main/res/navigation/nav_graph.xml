@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            app:startDestination="@id/navTestFragment">
+
+    <fragment
+        android:id="@+id/navTestFragment"
+        android:name="cn.tianyu.dailypractice.ui.fragment.NavTestFragment"
+        android:label="fragment_nav_test"
+        tools:layout="@layout/fragment_nav_test">
+        <action
+            android:id="@+id/action_navTestFragment_to_navTest2Fragment"
+            app:destination="@id/navTest2Fragment"/>
+        <!--doesn't works-->
+        <deepLink app:uri="test://graph.fragment.main"/>
+    </fragment>
+    <fragment
+        android:id="@+id/navTest2Fragment"
+        android:name="cn.tianyu.dailypractice.ui.fragment.NavTest2Fragment"
+        android:label="fragment_nav_test2"
+        tools:layout="@layout/fragment_nav_test2">
+        <action
+            android:id="@+id/action_navTest2Fragment_to_navTestFragment"
+            app:destination="@id/navTestFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            />
+    </fragment>
+</navigation>

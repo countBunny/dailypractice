@@ -4,5 +4,6 @@
         <item>X5WebView - learn how to use cacheManager</item>
         <item>change layoutParams dynamic</item>
         <item>use span in effective way</item>
+        <item>Jetpack suggested framework Navigation</item>
     </string-array>
 </resources>

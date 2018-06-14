@@ -18,6 +18,7 @@ import cn.tianyu.dailypractice.R
 import cn.tianyu.dailypractice.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_span_prompt.*
 import org.jetbrains.anko.ctx
+import kotlin.reflect.KClass
 
 class SpanPromptActivity : AppCompatActivity() {
 
@@ -94,6 +95,11 @@ class SpanPromptActivity : AppCompatActivity() {
             setPadding(dp10, dp10, dp10, dp10)
         }
     }
+
+    inline fun <reified T> newUnpaddedArray(clazz: KClass<*>, minLen: Int): Array<T?> {
+        return arrayOfNulls(minLen)
+    }
+
 
     private fun spanColorChange(textView: TextView?, color: Int = Color.RED) {
         bulletSpan.color = color

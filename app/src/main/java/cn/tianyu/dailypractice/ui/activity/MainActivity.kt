@@ -34,12 +34,12 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
     var mData: List<String> = ArrayList()
         get() = field
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VH = VH(LayoutInflater.from(parent?.context).inflate(R.layout.item_main_menu, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(LayoutInflater.from(parent.context).inflate(R.layout.item_main_menu, parent, false))
 
     override fun getItemCount(): Int = mData?.size ?: 0
 
-    override fun onBindViewHolder(holder: VH?, position: Int) {
-        holder?.setupDatas(mData[position])
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        holder.setupDatas(mData[position])
     }
 
 
@@ -59,6 +59,9 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
                         }
                         2->{
                             itemView.context.startActivity<SpanPromptActivity>()
+                        }
+                        3->{
+                            itemView.context.startActivity<NavigationActivity>()
                         }
                         else ->{
                             Toast.makeText(itemView.context, "undefined ops!", Toast.LENGTH_SHORT).show()
