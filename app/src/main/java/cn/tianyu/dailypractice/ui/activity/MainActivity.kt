@@ -63,6 +63,9 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
                         3->{
                             itemView.context.startActivity<NavigationActivity>()
                         }
+                        4->{
+                            itemView.context.startActivity<RecyclerLayoutActivity>()
+                        }
                         else ->{
                             Toast.makeText(itemView.context, "undefined ops!", Toast.LENGTH_SHORT).show()
                         }
