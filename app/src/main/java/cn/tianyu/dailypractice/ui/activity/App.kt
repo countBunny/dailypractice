@@ -29,9 +29,9 @@ class App : Application() {
             if (list[0].processName == processName) {
                 Log.d(TAG, "init once or more! processName is" + processName)
                 instance = this
+                //LogUtil based on this
+                Timber.plant(Timber.DebugTree())
             }
         }
-        //LogUtil based on this
-        Timber.plant(Timber.DebugTree())
     }
 }

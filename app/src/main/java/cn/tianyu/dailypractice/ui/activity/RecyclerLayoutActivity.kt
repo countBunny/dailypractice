@@ -3,6 +3,7 @@ package cn.tianyu.dailypractice.ui.activity
 import android.animation.ArgbEvaluator
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
@@ -25,6 +26,7 @@ class RecyclerLayoutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_recycler_layout)
         rvContent.layoutManager = PagerLayoutManager()
         rvContent.adapter = ColorCardAdaper()
+        AlertDialog.Builder(App.instance).create()
     }
 
     class ColorCardAdaper : RecyclerView.Adapter<ColorCardAdaper.VH>() {

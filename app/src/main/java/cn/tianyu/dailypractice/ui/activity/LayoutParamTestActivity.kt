@@ -1,5 +1,6 @@
 package cn.tianyu.dailypractice.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
@@ -22,6 +23,15 @@ class LayoutParamTestActivity : AppCompatActivity() {
                         ctx.resources.displayMetrics).toInt()
             }
             child.requestLayout()
+        }
+        test2.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND).let {
+                it.putExtra(Intent.EXTRA_TEXT, "practice app shared text!")
+                it.type = "text/plain"
+                it
+            }
+            //Intent.createChooser(intent, "hi flutter app")
+            startActivity(intent)
         }
     }
 }

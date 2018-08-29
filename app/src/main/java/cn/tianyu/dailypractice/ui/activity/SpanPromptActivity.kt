@@ -93,6 +93,8 @@ class SpanPromptActivity : AppCompatActivity() {
             setBackgroundResource(R.drawable.shape_text_border)
             val dp10 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, ctx.resources.displayMetrics).toInt()
             setPadding(dp10, dp10, dp10, dp10)
+            val sets = hashSetOf<Int>(1,7,9,3)
+            println(sets.max())
         }
     }
 
