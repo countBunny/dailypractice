@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cn.tianyu.dailypractice.R
+import cn.tianyu.kotlin_learn.ConsoleActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_main_menu.view.*
 import org.jetbrains.anko.startActivity
@@ -65,6 +66,9 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
                         }
                         4->{
                             itemView.context.startActivity<RecyclerLayoutActivity>()
+                        }
+                        5->{
+                            itemView.context.startActivity<ConsoleActivity>()
                         }
                         else ->{
                             Toast.makeText(itemView.context, "undefined ops!", Toast.LENGTH_SHORT).show()

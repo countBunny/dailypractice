@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.tianyu.kotlin_learn.ConsoleActivity">
+
+    <TextView
+        android:id="@+id/console1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_console"
+        android:padding="5dp"
+        android:textColor="#ff0"
+        android:text="console1"/>
+    <TextView
+        android:id="@+id/console2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_console"
+        android:padding="5dp"
+        android:textColor="#ff0"
+        android:text="console2"/>
+
+</LinearLayout>
