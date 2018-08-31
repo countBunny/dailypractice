@@ -7,15 +7,16 @@ import android.content.pm.PackageManager.GET_ACTIVITIES
 import android.content.pm.PackageManager.GET_SERVICES
 import android.os.Process
 import android.util.Log
+import cn.tianyu.dailypractice.BuildConfig
 import cn.tianyu.dailypractice.extensions.DelegateExt
+import cn.tianyu.dailypractice.utils.FileLoggingTree
 import timber.log.Timber
-
 
 
 class App : Application() {
     companion object {
         var instance: App by DelegateExt.notNullSingleValue<App>()
-        val TAG:String = "App"
+        val TAG: String = "App"
     }
 
     override fun onCreate() {
@@ -30,7 +31,11 @@ class App : Application() {
                 Log.d(TAG, "init once or more! processName is" + processName)
                 instance = this
                 //LogUtil based on this
-                Timber.plant(Timber.DebugTree())
+                if (BuildConfig.DEBUG) {
+                    Timber.plant(Timber.DebugTree())
+                } else {
+                    Timber.plant(FileLoggingTree(cacheDir.toString()))
+                }
             }
         }
     }
