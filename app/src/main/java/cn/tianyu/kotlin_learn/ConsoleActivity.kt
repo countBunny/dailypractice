@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import cn.tianyu.dailypractice.R
 import cn.tianyu.dailypractice.utils.LogUtil
 import cn.tianyu.kotlin_learn.section2.*
+import cn.tianyu.kotlin_learn.section3.joinToString
 import kotlinx.android.synthetic.main.activity_console.*
 
 class ConsoleActivity : AppCompatActivity() {
@@ -25,5 +26,11 @@ class ConsoleActivity : AppCompatActivity() {
         for (i in 1..100) {
             LogUtil.d(TAG, fizzBuzz(i))
         }
+        val list = arrayListOf("10", "11", "1001")
+        for ((index, element) in list.withIndex()){
+            LogUtil.d(TAG, "$index: $element")
+        }
+        val list2 = listOf(1,2,3)
+        console2.setText("${console2.text} \n${joinToString(list2, ";", "(", ")")}")
     }
 }

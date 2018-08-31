@@ -70,3 +70,6 @@ fun fizzBuzz(i:Int) = when{
     i%5 == 0 -> "Buzz "
     else -> "$i "
 }
+
+fun isLetter(c: Char)= c in 'a'..'z'|| c in 'A'..'Z'
+fun isNotDigit(c: Char) = c !in '0'..'9'
