@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import cn.tianyu.dailypractice.R
 import cn.tianyu.dailypractice.utils.LogUtil
 import cn.tianyu.kotlin_learn.section2.*
+import cn.tianyu.kotlin_learn.section3.InvokeFromJava
 import cn.tianyu.kotlin_learn.section3.joinToString
 import kotlinx.android.synthetic.main.activity_console.*
 
@@ -32,5 +33,6 @@ class ConsoleActivity : AppCompatActivity() {
         }
         val list2 = listOf(1,2,3)
         console2.setText("${console2.text} \n${joinToString(list2, ";", "(", ")")}")
+        InvokeFromJava.invokeKotlinMethod()
     }
 }
