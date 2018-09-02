@@ -48,6 +48,11 @@ class ConsoleActivity : AppCompatActivity() {
         } else {
             readExternalFileInfo()
         }
+        LogUtil.d(TAG, """
+            | //
+            |//
+            |/ \
+        """)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -65,7 +70,7 @@ class ConsoleActivity : AppCompatActivity() {
         val externalFilesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         LogUtil.d(TAG, "externalStoragePath is ${externalFilesDir.absolutePath}")
         val listFiles = externalFilesDir.listFiles()
-        if (listFiles != null&& !listFiles.isEmpty()) {
+        if (listFiles != null && !listFiles.isEmpty()) {
             val firstFile = listFiles.asSequence().filter { it.isFile }.first()
             if (firstFile != null) {
                 parsePathInRegex(firstFile.absolutePath)
