@@ -2,6 +2,8 @@
 
 package cn.tianyu.kotlin_learn.section3
 
+import cn.tianyu.dailypractice.utils.LogUtil
+
 fun <T> joinToString(collection: Collection<T>,
                      separator: String = ", ",
                      prefix: String = "",
@@ -36,3 +38,24 @@ var StringBuilder.lastChar: Char
     set(value) {
         setCharAt(length -1, value)
     }
+
+/*
+    3.5.2
+ */
+fun parsePath(path: String){
+    val directory = path.substringBeforeLast("/")
+    val fullName = path.substringAfterLast("/")
+
+    val fileName = fullName.substringBeforeLast(".")
+    val extension = fullName.substringAfterLast(".")
+    LogUtil.d("parsePath", "Dir: $directory, name: $fileName, ext: $extension")
+}
+
+fun parsePathInRegex(path: String){
+    val regex = """(.+)/(.+)\.(.+)""".toRegex()
+    val matchResult = regex.matchEntire(path)
+    if (matchResult != null) {
+        val (directory, fileName, extension) = matchResult.destructured
+        LogUtil.d("parsePath", "Dir: $directory, name: $fileName, ext: $extension")
+    }
+}
