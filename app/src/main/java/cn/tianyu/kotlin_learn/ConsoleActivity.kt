@@ -13,6 +13,9 @@ import cn.tianyu.kotlin_learn.section2.*
 import cn.tianyu.kotlin_learn.section3.InvokeFromJava
 import cn.tianyu.kotlin_learn.section3.joinToString
 import cn.tianyu.kotlin_learn.section3.parsePathInRegex
+import cn.tianyu.kotlin_learn.section4.Button
+import cn.tianyu.kotlin_learn.section4.CountingSet
+import cn.tianyu.kotlin_learn.section4.Payroll
 import kotlinx.android.synthetic.main.activity_console.*
 
 class ConsoleActivity : AppCompatActivity() {
@@ -26,6 +29,20 @@ class ConsoleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_console)
         test();
+        test4()
+    }
+
+    private fun test4() {
+        val button = Button()
+        button.showOff()
+        button.setFocus(true)
+        button.click()
+        val cset = CountingSet<Int>()
+        cset.addAll(listOf(1, 1, 2))
+        console2.text = """${console2.text}
+            _${cset.objectsAdded} objects were added, ${cset.size} remain
+            """.trimIndent().trimMargin("_")
+        Payroll.calculateSalary()
     }
 
     private fun test() {
@@ -53,6 +70,7 @@ class ConsoleActivity : AppCompatActivity() {
             |//
             |/ \
         """)
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
