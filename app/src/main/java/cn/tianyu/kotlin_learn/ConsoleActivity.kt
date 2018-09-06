@@ -10,12 +10,9 @@ import android.support.v7.app.AppCompatActivity
 import cn.tianyu.dailypractice.R
 import cn.tianyu.dailypractice.utils.LogUtil
 import cn.tianyu.kotlin_learn.section2.*
-import cn.tianyu.kotlin_learn.section3.InvokeFromJava
 import cn.tianyu.kotlin_learn.section3.joinToString
 import cn.tianyu.kotlin_learn.section3.parsePathInRegex
-import cn.tianyu.kotlin_learn.section4.Button
-import cn.tianyu.kotlin_learn.section4.CountingSet
-import cn.tianyu.kotlin_learn.section4.Payroll
+import cn.tianyu.kotlin_learn.section4.*
 import kotlinx.android.synthetic.main.activity_console.*
 
 class ConsoleActivity : AppCompatActivity() {
@@ -43,6 +40,22 @@ class ConsoleActivity : AppCompatActivity() {
             _${cset.objectsAdded} objects were added, ${cset.size} remain
             """.trimIndent().trimMargin("_")
         Payroll.calculateSalary()
+        val user2 = "{nickname: 'Dmitry'}".loadFromJSON(User2)
+        LogUtil.d(TAG, "user2's nickname is ${user2.nickname}")
+        registerBean(object : TalkativeButton(), Clickable{
+            override fun click() {
+                LogUtil.d(TAG, "TalkativeButton inner immplementation been clicked!")
+            }
+
+            override fun showOff() {
+                super<Clickable>.showOff()
+            }
+        })
+    }
+
+    private fun registerBean(widget: Focusable){
+        widget.showOff()
+        widget.setFocus(false)
     }
 
     private fun test() {

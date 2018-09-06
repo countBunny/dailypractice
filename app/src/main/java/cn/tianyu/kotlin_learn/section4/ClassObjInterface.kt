@@ -1,6 +1,7 @@
 package cn.tianyu.kotlin_learn.section4
 
 import cn.tianyu.dailypractice.utils.LogUtil
+import org.json.JSONObject
 import java.io.File
 
 interface Clickable {
@@ -79,7 +80,7 @@ class LengthCounter {
         private set
 
     fun addWord(word: String) {
-        counter + word.length
+        counter += word.length
     }
 }
 
@@ -123,3 +124,22 @@ object CaseInsensitiveFileComparator : Comparator<File> {
     }
 
 }
+
+class User2 private constructor(val nickname: String) {
+
+    companion object Loader : JSONFactory<User2> {
+        override fun fromJSON(jsonText: String) =
+                User2(JSONObject(jsonText).optString("nickname"))
+
+        fun newSubscribingUser(email: String): User2 = User2(email.substringBefore('@'))
+        fun newFacebookUser(accountId: Int) = User2(getFacebookName(accountId))
+
+        private fun getFacebookName(facebookAccountId: Int): String = "facebookUser${facebookAccountId}"
+    }
+}
+
+interface JSONFactory<T> {
+    fun fromJSON(jsonText: String): T
+}
+
+fun <T> String.loadFromJSON(factory: JSONFactory<T>): T = factory.fromJSON(this)
