@@ -7,13 +7,19 @@ import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import cn.tianyu.dailypractice.R
 import cn.tianyu.dailypractice.utils.LogUtil
 import cn.tianyu.kotlin_learn.section2.*
 import cn.tianyu.kotlin_learn.section3.joinToString
 import cn.tianyu.kotlin_learn.section3.parsePathInRegex
 import cn.tianyu.kotlin_learn.section4.*
+import cn.tianyu.kotlin_learn.section5.Person
+import cn.tianyu.kotlin_learn.section5.createAllDoneRunnable
+import cn.tianyu.kotlin_learn.section5.createPerson
+import cn.tianyu.kotlin_learn.section5.sum
 import kotlinx.android.synthetic.main.activity_console.*
+import org.jetbrains.anko.toast
 
 class ConsoleActivity : AppCompatActivity() {
 
@@ -27,6 +33,51 @@ class ConsoleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_console)
         test();
         test4()
+        test5()
+    }
+
+    private fun test5() {
+        val people = listOf(createPerson("Alice", 27), Person("Bob", 31))
+        LogUtil.d(TAG, "people max age is ${people.maxBy { it.age }}")
+        console2.text = "${console2.text} \nlambda sum result sum(1, 4) = ${sum(1, 4)}"
+//        { println(43)}()
+        run { println(43) }
+        val getName = Person::name
+        val aliceAge = people[0]::age
+        println(people.joinToString(" ", transform = getName))
+        val numbers = mapOf(0 to "zero", 1 to "one")
+        println(numbers.mapValues { it.value.toUpperCase() })
+        val canBeInClub27 = { p: Person -> p.age <= 27 }
+        println(people.all(canBeInClub27))
+        println(people.any(canBeInClub27))
+        println(people.count(canBeInClub27))
+        println(people.find(canBeInClub27))
+        println(people.firstOrNull(canBeInClub27))
+        //类型Map<Int, List<Person>>
+        println(people.groupBy { it.age })
+        val list = listOf("a", "ab", "b")
+        println(list.groupBy(String::first))
+        val strings = listOf("abc", "def")
+        println(strings.flatMap { it.toList() })
+        people.asSequence()
+                .map(Person::name)
+                .filter { it.startsWith("A") }
+                .toList()
+        val naturalNumbers = generateSequence(0) { it + 1 }
+        val numberTo100 = naturalNumbers.takeWhile { it <= 100 }
+        println(numberTo100.sum())
+        createAllDoneRunnable().run()
+        //SAM 写可重用的监听器
+        val listener = View.OnClickListener {
+            val text = when (it.id) {
+                R.id.console1 -> "First Console"
+                R.id.console2 -> "Second Console"
+                else -> "Unknown button"
+            }
+            toast(text)
+        }
+//        console1.setOnClickListener(listener)
+//        console2.setOnClickListener(listener)
     }
 
     private fun test4() {
@@ -42,7 +93,7 @@ class ConsoleActivity : AppCompatActivity() {
         Payroll.calculateSalary()
         val user2 = "{nickname: 'Dmitry'}".loadFromJSON(User2)
         LogUtil.d(TAG, "user2's nickname is ${user2.nickname}")
-        registerBean(object : TalkativeButton(), Clickable{
+        registerBean(object : TalkativeButton(), Clickable {
             override fun click() {
                 LogUtil.d(TAG, "TalkativeButton inner immplementation been clicked!")
             }
@@ -53,7 +104,7 @@ class ConsoleActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerBean(widget: Focusable){
+    private fun registerBean(widget: Focusable) {
         widget.showOff()
         widget.setFocus(false)
     }
