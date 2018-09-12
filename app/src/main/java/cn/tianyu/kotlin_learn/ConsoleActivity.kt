@@ -34,6 +34,17 @@ class ConsoleActivity : AppCompatActivity() {
         test();
         test4()
         test5()
+        test6()
+    }
+
+    private fun test6() {
+        val x = 1
+        println(x.toLong() in listOf(1L, 2L, 3L))
+        val binaryVal = 0B00000101
+        val letters = Array(26) { i -> ('a' + i).toString() }
+        println(letters.joinToString(""))
+        val strings = listOf("a", "b", "c")
+        println("%s/%s/%s".format(*strings.toTypedArray()))
     }
 
     private fun test5() {
@@ -78,6 +89,7 @@ class ConsoleActivity : AppCompatActivity() {
         }
 //        console1.setOnClickListener(listener)
 //        console2.setOnClickListener(listener)
+
     }
 
     private fun test4() {

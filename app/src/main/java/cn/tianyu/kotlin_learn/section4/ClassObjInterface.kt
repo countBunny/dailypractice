@@ -1,5 +1,10 @@
 package cn.tianyu.kotlin_learn.section4
 
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.util.AttributeSet
+import android.view.View
 import cn.tianyu.dailypractice.utils.LogUtil
 import org.json.JSONObject
 import java.io.File
@@ -143,3 +148,30 @@ interface JSONFactory<T> {
 }
 
 fun <T> String.loadFromJSON(factory: JSONFactory<T>): T = factory.fromJSON(this)
+
+class CustomView : View {
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0)
+            : super(context, attrs, defStyleAttr, defStyleRes)
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        canvas?.drawColor(Color.RED)
+    }
+}
+
+class CustomView2 : View {
+    constructor(context: Context) : this(context, null) {
+        //TODO ...
+
+    }
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0)
+            : super(context, attrs, defStyleAttr, defStyleRes)
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        canvas?.drawColor(Color.RED)
+    }
+}

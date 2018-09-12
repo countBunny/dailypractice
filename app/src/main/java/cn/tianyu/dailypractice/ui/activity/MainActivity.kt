@@ -1,5 +1,9 @@
 package cn.tianyu.dailypractice.ui.activity
 
+import android.app.Dialog
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.PixelFormat
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -7,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import cn.tianyu.dailypractice.R
 import cn.tianyu.kotlin_learn.ConsoleActivity
@@ -27,6 +32,24 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false)
         adapter.notifyDataSetChanged()
+        recyclerView.post {
+            val bitmap = Bitmap.createBitmap(resources.displayMetrics.widthPixels, 720, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            recyclerView.draw(canvas)
+            val img = ImageView(this@MainActivity).apply {
+                setImageBitmap(bitmap)
+            }
+            Dialog(this).apply {
+                setContentView(img)
+                setCancelable(true)
+                setCanceledOnTouchOutside(true)
+                setTitle("shapshot for recyclerView")
+                window.attributes.format = PixelFormat.TRANSPARENT
+                window.attributes.width = 600
+                window.attributes.height = 600
+            }.show()
+
+        }
     }
 }
 
@@ -44,7 +67,7 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
     }
 
 
-    class VH(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class VH(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun setupDatas(s: String) {
             with(s){

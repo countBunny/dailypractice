@@ -1,6 +1,8 @@
 package cn.tianyu.dailypractice
 
+import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import java.util.*
 
@@ -37,4 +39,24 @@ data class Sonbean(val skill: String, override var gender: Boolean) : Superbean(
         this.name = name
         this.age = age
     }
+}
+
+class MyService {
+    fun performAction() = "foo"
+}
+
+class MyTest {
+    /**
+     * 延迟初始化属性都是var
+     */
+    private lateinit var myService: MyService
+    @Before
+    fun setUp(){
+        myService = MyService()
+    }
+
+    @Test fun testAction(){
+        Assert.assertEquals("foo", myService.performAction())
+    }
+
 }
