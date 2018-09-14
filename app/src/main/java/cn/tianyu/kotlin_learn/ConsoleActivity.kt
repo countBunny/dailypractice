@@ -18,6 +18,7 @@ import cn.tianyu.kotlin_learn.section5.Person
 import cn.tianyu.kotlin_learn.section5.createAllDoneRunnable
 import cn.tianyu.kotlin_learn.section5.createPerson
 import cn.tianyu.kotlin_learn.section5.sum
+import cn.tianyu.kotlin_learn.section7.test7
 import kotlinx.android.synthetic.main.activity_console.*
 import org.jetbrains.anko.toast
 
@@ -35,6 +36,7 @@ class ConsoleActivity : AppCompatActivity() {
         test4()
         test5()
         test6()
+        test7()
     }
 
     private fun test6() {
