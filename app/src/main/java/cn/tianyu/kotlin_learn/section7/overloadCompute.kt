@@ -2,9 +2,12 @@ package cn.tianyu.kotlin_learn.section7
 
 import android.graphics.Point
 import android.os.Build
+import java.beans.PropertyChangeListener
+import java.beans.PropertyChangeSupport
 import java.math.BigDecimal
 import java.text.NumberFormat
 import java.time.LocalDate
+import kotlin.reflect.KProperty
 
 fun test7() {
     val p1 = Point(10, 20)
@@ -39,8 +42,8 @@ fun test7() {
     println(String.format("%.2f", 21.456))
     println(p1 == p2)
     println(p1 != p2)
-    val person1 = Person("Alice", "Smith")
-    val person2 = Person("Bob", "Johnson")
+    val person1 = Person("Alice", "Smith",19,2000)
+    val person2 = Person("Bob", "Johnson", 23,5000)
     //false
     println(person1 < person2)
     //10
@@ -55,7 +58,7 @@ fun test7() {
         val vacation = now..now.plusDays(10)
         println(now.plusWeeks(1) in vacation)
     }
-    for (c in "abc"){
+    for (c in "abc") {
         println(c)
     }
 }
@@ -96,9 +99,29 @@ operator fun Char.times(count: Int): String {
     return toString().repeat(count)
 }
 
-class Person(val firstName: String, val lastName: String) : Comparable<Person> {
+class Person(val firstName: String, val lastName: String, age: Int, salary: Int)
+    : Comparable<Person>, PropertyChangeAware() {
     override fun compareTo(other: Person): Int {
         return compareValuesBy(this, other, Person::lastName, Person::firstName)
+    }
+
+    private val observer = { prop: KProperty<*>, oldValue: Int, newValue: Int ->
+        changeSupport.firePropertyChange(prop.name, oldValue, newValue)
+    }
+
+    var age: Int by ObservableProperty(age, changeSupport)
+    var salary: Int by ObservableProperty(salary, changeSupport)
+}
+
+open class PropertyChangeAware {
+    protected val changeSupport = PropertyChangeSupport(this)
+
+    fun addPropertyChangeListener(listener: PropertyChangeListener) {
+        changeSupport.addPropertyChangeListener(listener)
+    }
+
+    fun removePropertyChangeListener(listener: PropertyChangeListener) {
+        changeSupport.removePropertyChangeListener(listener)
     }
 }
 
@@ -119,10 +142,29 @@ operator fun Rectangle.contains(p: Point): Boolean {
             p.y in upperLeft.y..lowerRight.y
 }
 
-data class NameComponents(val name:String, val extension:String)
+data class NameComponents(val name: String, val extension: String)
 
-fun splitFilename(fullName: String):NameComponents{
+fun splitFilename(fullName: String): NameComponents {
     val result = fullName.split('.', limit = 2)
     return NameComponents(result[0], result[1])
 }
 
+class ObservableProperty(var propValue: Int, val changeSupport: PropertyChangeSupport) {
+    operator fun getValue(p: Person, prop: KProperty<*>): Int = propValue
+
+    operator fun setValue(p: Person, prop: KProperty<*>, newValue: Int) {
+        val oldValue = propValue
+        propValue = newValue
+        changeSupport.firePropertyChange(prop.name, oldValue, newValue)
+    }
+}
+
+class Person2{
+    private val _attributes = hashMapOf<String, String>()
+
+    fun setAttributes(attrName: String, value: String) {
+        _attributes[attrName] = value
+    }
+
+    val name: String by _attributes
+}
