@@ -143,9 +143,21 @@ fun lookForAlice(people: List<Person>) {
     }
     println("Alice might be somewhere")
 }
+
 fun lookForAlice2(people: List<Person>) {
     people.forEach {
         if (it.firstName == "Alice") return@forEach
     }
     println("Alice might be somewhere")
+}
+
+fun lookForAlice3(people: List<Person>) {
+    people.forEach(fun(people) {
+        if (people.firstName == "Alice") return
+        println("${people.firstName} is not Alice")
+    })
+    people.filter(fun(person): Boolean {
+        return person.phoneNumber === null
+    })
+    people.filter(fun(person) = person.phoneNumber === null)
 }
