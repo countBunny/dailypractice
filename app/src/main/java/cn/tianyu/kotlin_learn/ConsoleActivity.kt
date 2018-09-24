@@ -20,6 +20,7 @@ import cn.tianyu.kotlin_learn.section5.createPerson
 import cn.tianyu.kotlin_learn.section5.sum
 import cn.tianyu.kotlin_learn.section7.test7
 import cn.tianyu.kotlin_learn.section8.test8
+import cn.tianyu.kotlin_learn.section9.test9
 import kotlinx.android.synthetic.main.activity_console.*
 import org.jetbrains.anko.toast
 
@@ -39,6 +40,7 @@ class ConsoleActivity : AppCompatActivity() {
         test6()
         test7()
         test8()
+        test9()
     }
 
     private fun test6() {
