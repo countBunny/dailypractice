@@ -3,7 +3,9 @@ package cn.tianyu.dailypractice
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 import java.util.*
 
 /**
@@ -59,4 +61,16 @@ class MyTest {
         Assert.assertEquals("foo", myService.performAction())
     }
 
+}
+
+class HasTempFolder {
+    @get:Rule
+    val folder = TemporaryFolder()
+
+    @Test
+    fun testUsingTempFolder(){
+        val createdFile = folder.newFile("myfile.txt")
+        val createdFolder = folder.newFolder("subFolder")
+
+    }
 }
