@@ -1,6 +1,8 @@
 package cn.tianyu.kotlin_learn.section9
 
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.reflect.KClass
 
 fun test9() {
     val letters = ('a'..'z').toList()
@@ -19,6 +21,16 @@ fun test9() {
     val items = listOf("one", 2, "three")
     println(items.filterIsInstance<String>())
     val serviceImpl = loadService<Service>()
+    enumerateCats(Animal::getIndex)
+    val list: MutableList<out Number> = ArrayList()
+    //不能调用做为实参的方法
+//    list.add(5)
+    val list2: MutableList<Any?> = mutableListOf('a', 1, "qwe")
+    val chars = mutableListOf('a', 'b', 'c')
+    val unknownElements: MutableList<*> =
+            if (Random().nextBoolean()) list2 else chars
+//    unknownElements.add(42)
+    println(unknownElements.first())
 }
 
 fun checkType(obj: Any) {
@@ -64,3 +76,46 @@ class Service
  * startActivity 可以用这种方式简化掉 ActivityImpl.class
  */
 inline fun <reified T> loadService() = ServiceLoader.load(T::class.java)
+
+open class Animal
+
+class Herd<out T : Animal>(private var leadAnimal: T, vararg animals: T)
+
+class Cat : Animal()
+
+fun enumerateCats(f: (Cat) -> Number) {
+
+}
+
+fun Animal.getIndex(): Int = this.hashCode()
+
+fun <T> copyData(source: MutableList<out T>, destination: MutableList<T>) {
+    for (item in source) {
+        destination.add(item)
+    }
+}
+
+interface FieldValidator<in T> {
+    fun validate(input: T): Boolean
+}
+
+object DefaultStringValidator : FieldValidator<String> {
+    override fun validate(input: String) = input.isNotEmpty()
+}
+
+object DefaultIntValidator : FieldValidator<Int> {
+    override fun validate(input: Int) = input >= 0
+}
+
+object Validators {
+    private val validators = mutableMapOf<KClass<*>, FieldValidator<*>>()
+
+    fun <T : Any> registerValidator(kClass: KClass<T>, fieldValidator: FieldValidator<T>) {
+        validators[kClass] = fieldValidator
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    operator fun <T : Any> get(kClass: KClass<T>): FieldValidator<T> =
+            validators[kClass] as? FieldValidator<T>
+                    ?: throw  IllegalArgumentException("No Validator for ${kClass.simpleName}")
+}
