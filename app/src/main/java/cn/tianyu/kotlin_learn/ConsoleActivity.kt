@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import cn.tianyu.dailypractice.R
 import cn.tianyu.dailypractice.utils.LogUtil
+import cn.tianyu.kotlin_learn.section10.test10
 import cn.tianyu.kotlin_learn.section2.*
 import cn.tianyu.kotlin_learn.section3.joinToString
 import cn.tianyu.kotlin_learn.section3.parsePathInRegex
@@ -41,6 +42,7 @@ class ConsoleActivity : AppCompatActivity() {
         test7()
         test8()
         test9()
+        test10()
     }
 
     private fun test6() {
