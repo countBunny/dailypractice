@@ -4,7 +4,7 @@ import ru.yole.jkid.*
 import ru.yole.jkid.serialization.getSerializer
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
-import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.javaType
 
@@ -33,7 +33,7 @@ class ClassInfo<T : Any>(cls: KClass<T>) {
         val paramName = param.name
                 ?: throw JKidException("Class $className has constructor parameter without name")
 
-        val property = cls.members.find { it.name == paramName } ?: return
+        val property = cls.memberProperties.find { it.name == paramName } ?: return
         val name = property.findAnnotation<JsonName>()?.name ?: paramName
         jsonNameToParamMap[name] = param
 
