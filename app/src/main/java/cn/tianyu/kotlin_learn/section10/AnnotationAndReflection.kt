@@ -1,6 +1,7 @@
 package cn.tianyu.kotlin_learn.section10
 
 import ru.yole.jkid.*
+import ru.yole.jkid.deserialization.deserialize
 import ru.yole.jkid.serialization.serialize
 import java.text.DateFormat
 import java.util.*
@@ -26,10 +27,18 @@ fun test10() {
     //反射访问成员属性
     val memberProperty = Person::age
     println(memberProperty.get(person))
+
+    //反序列化
+    val json = """{"title": "Catch-22", "author": {"name": "J. Heller"}}"""
+    val book = deserialize<Book>(json)
+    println(book)
 }
 
 var counter = 0
 fun foo(x: Int) = println(x)
+
+data class Author(val name: String)
+data class Book(val title: String, val author: Author)
 
 fun sum(x: Int, y: Int) = x + y
 
