@@ -24,6 +24,7 @@ import cn.tianyu.kotlin_learn.section8.test8
 import cn.tianyu.kotlin_learn.section9.test9
 import kotlinx.android.synthetic.main.activity_console.*
 import org.jetbrains.anko.toast
+import test11
 
 class ConsoleActivity : AppCompatActivity() {
 
@@ -43,6 +44,7 @@ class ConsoleActivity : AppCompatActivity() {
         test8()
         test9()
         test10()
+        test11()
     }
 
     private fun test6() {
