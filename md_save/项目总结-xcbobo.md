@@ -37,7 +37,7 @@
       }, 500);
       mPumping = false;
   }
-  
+
   private void invoke(Runnable runnable, long delay) {
       if (null == mHandler) {
           mHandler = new Handler(Looper.getMainLooper());
@@ -66,26 +66,26 @@
 
   ```java
   public final class TimeEventEmitter extends Observable {
-  
+
       private TimerTask mTimerTask;
-  
+
       private static final int INTERVAL = 1000 * 10;//10s 一次
-  
+
       //只要创建大于0 就会执行定时刷新
       private int mInterval;
-  
+
       //。。。
-  
+
       public TimeEventEmitter(int interval) {
           mInterval = interval;
       }
-  
+
       public static TimeEventEmitter emit(int interval) {
           TimeEventEmitter eventEmitter = new TimeEventEmitter(interval);
           eventEmitter.startTimerTask();
           return eventEmitter;
       }
-  
+
       public final void startTimerTask() {
           if (mTimerTask == null) {
               mTimerTask = new EmitterSchedule();
@@ -103,9 +103,9 @@
           }
       }
       //。。。
-  
+
       private class EmitterSchedule extends TimerTask {
-  
+
           @Override
           public void run() {
               //work thread
@@ -124,20 +124,20 @@
   protected void onViewAttachedToWindow(@NonNull InteractTaskHolder holder) {
       TaskDataManager.receive(holder);
   }
-  
+
   @Override
   protected void onViewDetachedFromWindow(@NonNull InteractTaskHolder holder) {
       TaskDataManager.reject(holder);
   }
-  
+
   public static class InteractTaskHolder extends RecyclerView.ViewHolder implements Observer {
-  
+
       //private members
-  
+
       public InteractTaskHolder(View itemView) {
           //init...
       }
-  
+
       public void bindHolderWithData(final InteractListBean interactListBean, @Nullable final int flag) {
           //...
           long remain = interactListBean.time - current;
@@ -154,7 +154,7 @@
               }
           }
       }
-  
+
       @Override
       public void update(Observable o, Object arg) {
           if (null == mData || null == handler) {
@@ -188,13 +188,13 @@
 
   ```java
   public class HistogramSunView extends View {
-  
+
       private HistogramSunViewConfig mConfig;
       private SparseArray<HistogramRect> mRectSparseArray;
       //members
-  
+
       private void init() {//...}
-  
+
       @Override
       protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
           //固定高度220dp
@@ -202,7 +202,7 @@
           heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
           super.onMeasure(widthMeasureSpec, heightMeasureSpec);
       }
-  
+
       public void gearIt(SunshineRootBean info) {
           mConfig.mInfo = info;
           mConfig.prepareData();
@@ -210,7 +210,7 @@
           invalidate();
       }
       //...
-  
+
       @Override
       public void draw(Canvas canvas) {
           super.draw(canvas);
@@ -249,15 +249,15 @@
       }
       
       //...初始化绘制数据代码
-  
+
       public class HistogramRect {
-  
+
           private String mSunValue;
-  
+
           public int mHeightPixel;
-  
+
           public int mPaddingLeftPixel;
-  
+
           public void draw(Canvas canvas, float percent) {
               int save = canvas.save();
               canvas.translate(mPaddingLeftPixel, mBgHeight - mHeightPixel);
@@ -278,9 +278,9 @@
               canvas.restoreToCount(save);
           }
       }
-  
+
       public interface LocateListener {
-  
+
           void locate(int x, int y);
       }
   }
@@ -288,14 +288,14 @@
 
 - 模板方法模式，将通用的方法抽到父类，例如市场模块，买和卖非常相似。
 
-  ![](E:\md\src\market.png)
+  ![](.\src\market.png)
 
   核心代码实现：
 
   ```java
   public abstract class BaseEasyTradeDialogFragment<T extends BasePresenter> extends BaseEnhancedDialogFragment<T> {
      //...
-  
+
       @Override
       protected void initGlobalViews() {
           //...
@@ -313,7 +313,7 @@
           extraViewInit();
           //...
       }
-  
+
       @Override
       public void onDestroyView() {
           if (null != mTextWatcher) {
@@ -323,18 +323,18 @@
           //...
           super.onDestroyView();
       }
-  
+
       /**
        * @return 库存数量
        */
       protected abstract int getGoodTotalNum();
-  
+
       protected abstract void onTextItemNum(CharSequence sequence);
-  
+
       protected void extraViewInit() {
-  
+
       }
-  
+
       /**
        * 点击交易按钮更多的判断逻辑 返回true交易中断
        *
@@ -342,7 +342,7 @@
        */
       protected abstract boolean moreTradeButtonJudgement();
       //...
-  
+
       @OnClick(R.id.tvBuy)
       public void onBuyClicked(View v) {
           if (ViewUtil.isFastDoubleClick(v) || mPickedQuantites == 0 || trading || moreTradeButtonJudgement()) {
@@ -352,17 +352,17 @@
           trading = true;
           carryYourTradeLogical();
       }
-  
+
       /**
        * 交易请求逻辑
        */
       protected abstract void carryYourTradeLogical();
-  
+
       public interface TradeResultListener {
-  
+
           void tradeResult(TradingRootBean.GoodBean item);
       }
-  
+
   }
   ```
 
@@ -371,17 +371,17 @@
   ```java
   public class EasyBuyDialogFragment extends BaseEasyTradeDialogFragment<EasyBuyContract.Presenter> implements EasyBuyContract.View {
       //...
-  
+
       @Override
       protected int getGoodTotalNum() {
           //...
       }
-  
+
       @Override
       protected void extraViewInit() {
           //...
       }
-  
+
       @Override
       protected void onTextItemNum(CharSequence sequence) {
           if (TextUtils.isEmpty(sequence)) {
@@ -412,7 +412,7 @@
           }
           updateTradeUIExpression();
       }
-  
+
       @Override
       protected boolean moreTradeButtonJudgement() {
           if (mYouCantAffordIt) {
@@ -422,14 +422,14 @@
           return false;
       }
       //...
-  
+
       private void updateTradeUIExpression() {
           if (null == mTradeItem) {
               return;
           }
           //...子类自己的显示逻辑
       }
-  
+
       @Override
       public void purchaseResult(boolean success, long goodId, int pickedQuantites) {
           if (success) {
@@ -440,13 +440,13 @@
           }
           trading = false;
       }
-  
+
       @Override
       protected void carryYourTradeLogical() {
           //...
           mPresenter.purchaseCommodity(mTradeItem.goodId, mPickedQuantites);
       }
-  
+
   }
   ```
 
