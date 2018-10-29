@@ -49,4 +49,5 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 }
