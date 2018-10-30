@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="cn.tianyu.dailypractice">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".ui.activity.App"
@@ -45,5 +46,13 @@
         <activity android:name="cn.tianyu.kotlin_learn.ConsoleActivity"
             >
         </activity>
+
+        <activity
+            android:name="cn.tianyu.dailypractice.job_scheduler.JobScheduleActivity"
+            >
+        </activity>
+        <service
+            android:name=".job_scheduler.TestJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 </manifest>

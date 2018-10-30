@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import cn.tianyu.dailypractice.R
+import cn.tianyu.dailypractice.job_scheduler.JobScheduleActivity
 import cn.tianyu.kotlin_learn.ConsoleActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_main_menu.view.*
@@ -92,6 +93,9 @@ class MainMenuAdapter : RecyclerView.Adapter<MainMenuAdapter.VH>() {
                         }
                         5->{
                             itemView.context.startActivity<ConsoleActivity>()
+                        }
+                        6 ->{
+                            itemView.context.startActivity<JobScheduleActivity>()
                         }
                         else ->{
                             Toast.makeText(itemView.context, "undefined ops!", Toast.LENGTH_SHORT).show()
